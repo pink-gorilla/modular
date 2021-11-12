@@ -1,0 +1,29 @@
+name: Validate Pull Request
+
+on:
+  pull_request:
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache Maven dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: clj-fmt
+      run: clojure -M:cljfmt
+      shell: bash
+    - name: test-clj
+      run: clojure -M:test
+    #- name:code coverage
+    #  run: |
+    #    lein cloverage
+    #    bash <(curl -s https://codecov.io/bash) -d

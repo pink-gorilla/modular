@@ -1,0 +1,65 @@
+{:paths ["src"
+         "resources" ; extension , resources used in devtools ui
+         ]
+ :deps
+ {org.clojure/clojure    {:mvn/version "1.10.3"}
+  com.taoensso/timbre {:mvn/version "5.1.2"} ; clj/cljs logging
+  org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
+  clojure.java-time/clojure.java-time {:mvn/version "0.3.2"}
+  time-literals/time-literals {:mvn/version "0.1.5"}
+  com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"} ; uuid - clojurescript
+  fipp/fipp {:mvn/version "0.6.24"} ; edn pretty printing
+  cheshire/cheshire {:mvn/version "5.10.1"}  ; JSON parsings and pretty printing
+  resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
+  ;com.cemerick/url {:mvn/version "0.1.1"}
+  hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
+  }
+
+ :aliases
+ {;https://github.com/applied-science/deps-library
+  :release
+  {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
+   :main-opts ["-m" "applied-science.deps-library"]}
+
+  ; https://github.com/weavejester/cljfmt
+  :cljfmt
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
+   :main-opts ["-m" "cljfmt.main" "check" "--indents" "cljfmt.edn"]}
+  :cljfmt-fix
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
+   :main-opts ["-m" "cljfmt.main" "fix" "--indents" "cljfmt.edn"]}
+
+ ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
+  :lint
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "clj-kondo.main"
+               "--lint"
+               "src" "test"
+               "--config" "cljkondo.edn"]}
+
+  :outdated
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "antq.core"]}
+
+  :check
+  {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
+                                 :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
+   :main-opts ["-m" "clj-check.check"]}
+
+  :garamond
+  {:main-opts ["-m" "garamond.main"]
+   :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
+
+  :test
+  {:extra-paths ["test" "demo"]
+   :extra-deps {io.github.cognitect-labs/test-runner
+                {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                 :sha "dd6da11611eeb87f08780a30ac8ea6012d4c05ce"}}
+   :main-opts ["-m" "cognitect.test-runner"]
+   :exec-fn cognitect.test-runner.api/test}
+
+  :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}}
+          :main-opts  ["-m" "nrepl.cmdline"]}
+
+;
+  }}
