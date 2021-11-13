@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,8 +32,8 @@ jobs:
       shell: bash
     - name: test-clj
       run: clojure -M:test
-    - name: clj-kondo
-      run: clojure -M:lint
+    #- name: clj-kondo
+    #  run: clojure -M:lint
     #- name: cloverage
     #  run: clojure -M:cloverage
     - name: Release
