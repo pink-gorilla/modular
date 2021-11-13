@@ -1,7 +1,7 @@
 (ns modular.config.config-test
   (:require
    [clojure.test :refer [deftest is testing]]
-   [modular.config :refer [load-config! config-atom add-config]]))
+   [modular.config :as config :refer [load-config! config-atom add-config]]))
 
 (defn c [c]
   (reset! config-atom {})
@@ -33,3 +33,7 @@
   (is (= [{:a 1} {:a 2}]  (add-config [{:a 1}] [{:a 2}])))
   (is (= [{:a 1} {:a 2}]  (add-config {:a 1} [{:a 2}]))))
 
+(deftest set-config-test []
+  (config/set! :demo/service3 {:a 1 :b 2})
+  (is (= {:a 1 :b 2}  (config/get-in-config [:demo/service3])))
+  (is (= 1  (config/get-in-config [:demo/service3 :a]))))

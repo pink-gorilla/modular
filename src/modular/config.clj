@@ -14,13 +14,7 @@
 (defn get-in-config [path]
   (get-in @config-atom path))
 
-(defn set!
-  "The config normally gets configured at an application level:
-   On app start the config(s) get loaded.
-   In the repl or in unit tests we want to be able to set configs programmatically.
-   Therefore set! exists"
-  [kw config]
-  (swap! config-atom assoc kw config))
+;(swap! a assoc :comparator comparator)
 
 ;; ns require 
 
@@ -76,3 +70,14 @@
   (let [app-config (if (vector? app-config) app-config [app-config])
         user-config (if (vector? user-config) user-config [user-config])]
     (into [] (concat app-config user-config))))
+
+#_(defn get-in [path]
+    (get-in @config-atom path))
+
+(defn set!
+  "The config normally gets configured at an application level:
+   On app start the config(s) get loaded.
+   In the repl or in unit tests we want to be able to set configs programmatically.
+   Therefore set! exists"
+  [kw config]
+  (swap! config-atom assoc kw config))
