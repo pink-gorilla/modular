@@ -1,4 +1,4 @@
-(ns reval.persist.image
+(ns modular.persist.image
   (:refer-clojure :exclude [read])
   (:require
    [clojure.java.io :as io]

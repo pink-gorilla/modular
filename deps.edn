@@ -6,6 +6,7 @@
   com.taoensso/timbre {:mvn/version "5.1.2"} ; clj/cljs logging
   org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
   clojure.java-time/clojure.java-time {:mvn/version "0.3.2"}
+  com.andrewmcveigh/cljs-time {:mvn/version  "0.5.2"}
   time-literals/time-literals {:mvn/version "0.1.5"}
   com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"} ; uuid - clojurescript
   fipp/fipp {:mvn/version "0.6.24"} ; edn pretty printing
@@ -13,6 +14,12 @@
   resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
   ;com.cemerick/url {:mvn/version "0.1.1"}
   hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
+  cprop/cprop {:mvn/version "0.1.18"} ; config management https://github.com/tolitius/cprop
+  lambdaisland/deep-diff2 {:mvn/version "2.0.108"} ; differ
+  bidi/bidi {:mvn/version "2.1.6"}
+  io.replikativ/incognito {:mvn/version "0.2.7"
+                           :exclusions [com.cognitect/fress]} ; fress makes problems
+
   }
 
  :aliases
