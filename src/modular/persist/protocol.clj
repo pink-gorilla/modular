@@ -69,7 +69,7 @@
 
 (comment
 
-  ; you need to require reval/default so that side-effects are run first.  
+  ; you need to require modular.persist/ [edn image jsom text unknowm] so that side-effects are run first.  
   (known-formats)
 
 ;
