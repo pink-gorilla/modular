@@ -14,6 +14,20 @@
 (defn get-in-config [path]
   (get-in @config-atom path))
 
+(defn set!
+  "The config normally gets configured at an application level:
+   On app start the config(s) get loaded.
+   In the repl or in unit tests we want to be able to set configs programmatically.
+   Therefore set! exists"
+  [kw config]
+  (swap! config-atom assoc kw config))
+
+;; ns require 
+
+; the config is an edn file that can contain clojure symbols.
+; In order for symbols to be resolveable, the namespace of the symbol has to be loaded.
+; therefore we have a require section here.
+
 (defn require-log [n]
   (info "clj-require:" n)
   (require [n]))
