@@ -1,4 +1,5 @@
-# modular [![GitHub Actions status |pink-gorilla/modular](https://github.com/pink-gorilla/modular/workflows/CI/badge.svg)](https://github.com/pink-gorilla/modular/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/modular.svg)](https://clojars.org/org.pinkgorilla/modular)
+# modular
+[![GitHub Actions status |pink-gorilla/modular](https://github.com/pink-gorilla/modular/workflows/CI/badge.svg)](https://github.com/pink-gorilla/modular/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/modular.svg)](https://clojars.org/org.pinkgorilla/modular)
 
 
 Modular helps building modular applications.
