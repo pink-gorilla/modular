@@ -33,11 +33,11 @@
 (defn require-ns-clj []
   (if-let [ns-clj (get-in-config [:webly :ns-clj])]
     (try
-      (if (seq? ns-clj)
+      (if (vector? ns-clj)
         (do (info "requiring ns-clj:" ns-clj)
             (doall
              (map require-log ns-clj)))
-        (error "[:webly :ns-clj] should be a seq. not requiring!"))
+        (error "[:webly :ns-clj] should be a vector. not requiring!"))
       (catch Exception e
         (error "Exception requiring ns-clj: " (pr-str e))))
     (warn "no ns-clj defined.")))
