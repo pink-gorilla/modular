@@ -24,7 +24,11 @@
 
 (defn require-log [n]
   (info "clj-require:" n)
-  (require [n]))
+  (try
+    (require [n])
+    (catch Exception e
+      (error "ns-clj: could not require: " n)
+      (error "Exception requiring ns-clj: " (pr-str e)))))
 
 (defn require-ns-clj []
   (let [ns-clj (get-in-config [:webly :ns-clj])]
