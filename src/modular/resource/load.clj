@@ -30,7 +30,7 @@
          ;          )
         ]
     (create-dirs dir-out)
-    (println "writing to: " dir-out filename-out)
+    ;(println "writing to: " dir-out filename-out)
     ;(io/copy file-in file-out)
     (->> (slurp-res name-full)
          (spit filename-out))))
@@ -55,6 +55,18 @@
   (describe-recursive-files "public")
   (recursive-filenames "public")
   (write-resources-to ".webly" "public")
+
+  (require '[clojure.string :as str])
+  (def path "www.hoertlehner.com/bongo/index.html")
+
+  (defn config-path [path]
+    (str/replace path
+                 #"(.*\/)(.*)$"
+                 #(str (second %1) "config.edn")))
+
+  (str/replace path #"(.*\/)(.*)$" #(str  (second %1) "config.edn"))
+
+  (config-path path)
 
 ; 
   )
