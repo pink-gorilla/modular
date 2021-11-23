@@ -19,6 +19,7 @@
 (defn ensure-directory [path]
   (when-not (.exists (io/file path))
     (.mkdir (java.io.File. path))))
+
 (defn ensure-directory-webly []
   (ensure-directory ".webly"))
 
