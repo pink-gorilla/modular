@@ -30,16 +30,20 @@
       (error "ns-clj: could not require: " n)
       (error "Exception requiring ns-clj: " (pr-str e)))))
 
+(defn require-namespaces [ns-clj-vec]
+  (try
+    (if (vector? ns-clj-vec)
+      (do (info "requiring ns-clj:" ns-clj-vec)
+          (doall
+           (map require-log ns-clj-vec)))
+      (error "require-namespaces ns-clj-vec should be a vector. not requiring!"))
+    (catch Exception e
+      (error "Exception requiring ns-clj-vec: " (pr-str e))
+      :clj-require/error)))
+
 (defn require-ns-clj []
   (if-let [ns-clj (get-in-config [:webly :ns-clj])]
-    (try
-      (if (vector? ns-clj)
-        (do (info "requiring ns-clj:" ns-clj)
-            (doall
-             (map require-log ns-clj)))
-        (error "[:webly :ns-clj] should be a vector. not requiring!"))
-      (catch Exception e
-        (error "Exception requiring ns-clj: " (pr-str e))))
+    (require-namespaces ns-clj)
     (warn "no ns-clj defined.")))
 
 (defn resolve-symbol [path]

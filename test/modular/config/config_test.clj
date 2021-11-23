@@ -1,7 +1,7 @@
 (ns modular.config.config-test
   (:require
    [clojure.test :refer [deftest is testing]]
-   [modular.config :as config :refer [load-config! config-atom add-config]]))
+   [modular.config :as config :refer [load-config! config-atom add-config require-namespaces]]))
 
 (defn c [c]
   (reset! config-atom {})
@@ -37,3 +37,7 @@
   (config/set! :demo/service3 {:a 1 :b 2})
   (is (= {:a 1 :b 2}  (config/get-in-config [:demo/service3])))
   (is (= 1  (config/get-in-config [:demo/service3 :a]))))
+
+(deftest require-namespaces-test []
+  (let [require-result (require-namespaces ['demo.panama])]
+    (is (not (= :clj-require/error require-result)))))
