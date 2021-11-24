@@ -15,7 +15,7 @@
                ZonedDateTime]
               [java.time.format
                DateTimeFormatter])))
-
+;; stolen from:
 ;; https://github.com/luminus-framework/luminus-transit/blob/master/src/luminus_transit/time.cljc
 
 (def iso-local-time
@@ -33,6 +33,8 @@
 (def iso-zoned-date-time
   #?(:clj (DateTimeFormatter/ofPattern "yyyy-MM-dd'T'HH:mm:ss.SSSXX"))
   #?(:cljs (tf/formatter "yyyy-MM-dd'T'HH:mm:ss.SSSZ")))
+
+;; TRANSIT
 
 #?(:cljs
    (def time-deserialization-handlers
@@ -78,3 +80,6 @@
        java.time.ZonedDateTime (transit/write-handler
                                 (constantly "ZonedDateTime")
                                 #(.format % iso-zoned-date-time))}}))
+
+;; EDN
+

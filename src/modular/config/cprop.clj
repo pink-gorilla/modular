@@ -9,12 +9,12 @@
 ;; cprop
 (defn- load-from-file [filename]
   (info "loading config from file:" filename)
-  (binding [*data-readers* e/config]
+  (binding [*data-readers* e/data-readers]
     (from-file filename)))
 
 (defn- load-from-resource [name]
   (info "loading config from resource:" name)
-  (binding [*data-readers* e/config]
+  (binding [*data-readers* e/data-readers]
     (from-resource name)))
 
 (defn- from-map-file-res [config]

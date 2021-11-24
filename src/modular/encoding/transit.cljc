@@ -1,7 +1,9 @@
 (ns modular.encoding.transit
   (:require
+   [cognitect.transit :as transit]
    [modular.encoding.bidi :as bidi]
-   [modular.encoding.time :as time]))
+   [modular.encoding.time :as time])
+  #?(:clj (:import [java.io ByteArrayInputStream ByteArrayOutputStream])))
 
 ; another encoding option:
 ; https://nextjournal.com/schmudde/java-time
@@ -26,4 +28,34 @@
 ; (def ^:private default-readers {'ig/ref ref, 'ig/refset refset})
 ; (defn read-string "Read a config from a string of edn. Refs may be denotied by tagging keywords with #ig/ref." ([s] (read-string {:eof nil} s)) ([opts s] (let [readers (merge default-readers (:readers opts {}))] (edn/read-string (assoc opts :readers readers) s))))
 
+#?(:clj
+   (defn write-transit [data]
+     (let [out (ByteArrayOutputStream. 4096)
+           writer (transit/writer out :json encode)]
+       (transit/write writer data)
+       (.toString out))))
+
+#?(:clj
+   (defn string->stream
+     ([s] (string->stream s "UTF-8"))
+     ([s encoding]
+      (-> s
+          (.getBytes encoding)
+          (ByteArrayInputStream.)))))
+
+#?(:clj
+   (defn read-transit [json]
+     (let [in (string->stream json)
+           reader (transit/reader in :json decode)]
+       (transit/read reader))))
+
+#?(:clj
+   (defn spit-transit [filename data]
+     (->> (write-transit data)
+          (spit filename))))
+
+#?(:clj
+   (defn slurp-transit [filename]
+     (let [json (slurp filename)]
+       (read-transit json))))
 

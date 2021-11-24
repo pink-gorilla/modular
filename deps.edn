@@ -1,32 +1,37 @@
 {:paths ["src"
          "resources" ; extension , resources used in devtools ui
          ]
- :deps
- {org.clojure/clojure    {:mvn/version "1.10.3"}
-  ; logging
-  com.taoensso/timbre {:mvn/version "5.1.2"} ; clj/cljs logging
-  ; ids 
-  com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"} ; uuid - clojurescript
-  ; configuration
-  cprop/cprop {:mvn/version "0.1.18"} ; config management https://github.com/tolitius/cprop
-  ; differ
-  lambdaisland/deep-diff2 {:mvn/version "2.0.108"} ; differ
-  ; files and resources
-  resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
-  hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
-  ; encoding edn/json
-  fipp/fipp {:mvn/version "0.6.24"} ; edn pretty printing
-  cheshire/cheshire {:mvn/version "5.10.1"}  ; JSON parsings and pretty printing
-  io.replikativ/incognito {:mvn/version "0.2.7"  ; serialize any object
-                         :exclusions [com.cognitect/fress]} ; fress makes problems
-  org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
-  ; for encoding of types that edn/transit normally dont work on.
-  clojure.java-time/clojure.java-time {:mvn/version "0.3.2"}
-  com.andrewmcveigh/cljs-time {:mvn/version  "0.5.2"}
-  time-literals/time-literals {:mvn/version "0.1.5"}
-  bidi/bidi {:mvn/version "2.1.6"}  
-  babashka/fs {:mvn/version "0.1.1"}
-  }
+ :deps {org.clojure/clojure    {:mvn/version "1.10.3"}
+        ; logging
+        com.taoensso/timbre {:mvn/version "5.1.2"} ; clj/cljs logging
+        ; ids 
+        com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"} ; uuid - clojurescript
+        ; configuration
+        cprop/cprop {:mvn/version "0.1.18"} ; config management https://github.com/tolitius/cprop
+        ; differ
+        lambdaisland/deep-diff2 {:mvn/version "2.0.108"} ; differ
+        ; files and resources
+        babashka/fs {:mvn/version "0.1.1"}
+        resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
+        hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
+        ; encoding edn/transit/json
+        com.cognitect/transit-clj {:mvn/version  "0.8.319"} ; transit
+        com.cognitect/transit-cljs {:mvn/version  "0.8.256"} ; transit
+        fipp/fipp {:mvn/version "0.6.24"} ; edn pretty printing
+        cheshire/cheshire {:mvn/version "5.10.1"}  ; JSON parsings and pretty printing
+        ; time encoding
+        tick/tick {:mvn/version "0.4.32"} ; replacement for clj-time
+        clojure.java-time/clojure.java-time {:mvn/version "0.3.2"}
+        com.andrewmcveigh/cljs-time {:mvn/version  "0.5.2"}
+        time-literals/time-literals {:mvn/version "0.1.5"}
+        ; image encoding
+        org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
+        ; taggedreader encoding
+        io.replikativ/incognito {:mvn/version "0.2.7"  ; serialize any object
+                                 :exclusions [com.cognitect/fress]} ; fress makes problems
+        bidi/bidi {:mvn/version "2.1.6"}}
+
+
 
  :aliases
  {;https://github.com/applied-science/deps-library
@@ -73,9 +78,31 @@
 
   :nrepl {:extra-paths ["test/resources"]
           :extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}
-                       org.pinkgorilla/ui-aggrid {:mvn/version "0.0.12"}
-                       }
+                       org.pinkgorilla/ui-aggrid {:mvn/version "0.0.12"}}
           :main-opts  ["-m" "nrepl.cmdline"]}
+
+  
+   :npm-install {:extra-paths ["test"]
+                     :extra-deps {org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+                                  org.pinkgorilla/webly {:mvn/version "0.4.557"
+                                                         :exclusions  [org.pinkgorilla/modular]}}
+                     :exec-fn webly.app.app/webly-run
+                     :exec-args {:config nil
+                                 :profile "npm-install"}}
+
+
+
+  :build-cljs-test {:extra-paths ["test" ]
+               :extra-deps {org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+                            org.pinkgorilla/webly {:mvn/version "0.4.557"
+                                                   :exclusions  [org.pinkgorilla/modular]
+                                                   }}
+               :exec-fn webly.app.app/webly-run
+               :exec-args {:config nil
+                           :profile "ci"}}
+  
+
+
 
 ;
   }}

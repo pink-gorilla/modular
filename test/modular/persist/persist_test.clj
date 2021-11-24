@@ -2,7 +2,8 @@
   (:require
    [clojure.test :refer [deftest is]]
    [modular.persist.protocol :refer [loadr save]]
-   [modular.persist.edn :refer [read-str pprint-str]]
+   [modular.encoding.edn :refer [read-edn]]
+   [modular.persist.edn :refer [pprint-str]]
    [modular.test-init] ; side effects
    ))
 
@@ -14,8 +15,8 @@
 (deftest localdate-reload-test
   (let [sdate (str "#time/date \"2011-01-01\"" "\n")
         stime (str "#time/date-time \"2021-11-04T00:52:59.694154533\"" "\n")]
-    (is (= sdate (-> sdate read-str pprint-str)))
-    (is (= stime (-> stime read-str pprint-str)))))
+    (is (= sdate (-> sdate read-edn pprint-str)))
+    (is (= stime (-> stime read-edn pprint-str)))))
 
 
 
