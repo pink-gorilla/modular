@@ -28,12 +28,13 @@
 
 (defn now-local []
   (-> (tick/now)
-      ;tick/date-time
-      ))
+      (tick/date-time)))
 ; (local-date-time 2015 9 28 10 15)
 
 #?(:clj
    (defn now-unix []
      (quot (System/currentTimeMillis) 1000)))
 
-
+(defn now-date []
+  (-> (tick/now)
+      (tick/date)))
