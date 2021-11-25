@@ -34,7 +34,7 @@
                :name-full res-path
                :scheme "-"}
         describe-entry (fn [itm]
-                         (println "describing: " itm)
+                         ;(println "describing: " itm)
                          (let [{:keys [name-full]} itm]
                            (describe name-full)))
         all (tree-seq dir? describe-entry root)]

@@ -3,8 +3,17 @@
    [clojure.java.io :as io]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [hawk.core :as hawk]
-   [webly.ws.core :refer [send! send-all! send-response]]
-   [modular.file.explore :refer [load-file!]]))
+   [webly.ws.core :refer [send! send-all! send-response]]))
+
+;; this is used in goldly sci-cljs watching.
+;; it needs refactoring to make it more flexible.
+
+(defn load-file! [filename]
+  (let [code (slurp filename)]
+    {:filename filename
+     :code code}))
+
+;;
 
 (defn to-canonical [path]
   (->>
@@ -44,5 +53,4 @@
       (hawk/watch! {:watcher :polling}
                    [{:paths watch-paths
                      :handler (partial process-file-change event-name root)}]))))
-
 

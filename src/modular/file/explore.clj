@@ -3,23 +3,37 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [clojure.java.io :as io]))
 
-(defn dir? [filename]
-  (-> (io/file filename) .isDirectory))
+(defn file-dir? [filename]
+  (debug "checking: " filename)
+  (-> (io/file filename)
+      (.isDirectory)))
 
-(defn explore-dir [dir purpose]
+(defn- describe-file [dir filename]
+  (let [name-full (str dir "/" filename)]
+    {:scheme "file"
+     :name filename
+     :dir? (file-dir? name-full)
+     :name-full name-full}))
+
+(defn describe [dir]
   (let [dir (io/file dir)
         files (if (.exists dir)
-                (into [] (->> (.list dir)
-                              (remove dir?)
-                              doall))
+                (->> (.list dir)
+                     (map (partial describe-file dir))
+                     doall)
                 (do
-                  (warnf "path for: %s not found: %s" purpose dir)
-                  []))]
-    (debug "explore-dir: " files)
-    ;(warn "type file:" (type (first files)) "dir?: " (dir? (first files)))
+                  (warnf "describe (filesystem) path %s not found." dir)
+                  '()))]
+    (debug "describe (filesystem) dir: " files)
     files))
 
-(defn load-file! [filename]
-  (let [code (slurp filename)]
-    {:filename filename
-     :code code}))
+(defn dir? [{:keys [dir?]}]
+  dir?)
+
+(defn describe-files [res-path]
+  (->> (describe res-path)
+       (remove dir?)))
+
+(defn describe-directories [res-path]
+  (->> (describe res-path)
+       (filter dir?)))
