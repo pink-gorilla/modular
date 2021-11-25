@@ -3,7 +3,7 @@
    [clojure.java.io :as io]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [hawk.core :as hawk]
-   [webly.ws.core :refer [send! send-all! send-response]]))
+   [modular.ws.core :refer [send! send-all! send-response]]))
 
 ;; this is used in goldly sci-cljs watching.
 ;; it needs refactoring to make it more flexible.
