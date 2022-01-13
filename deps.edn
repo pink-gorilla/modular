@@ -72,7 +72,6 @@
   {:extra-paths ["test/src" 
                  "test/resources"
                  ;"demo"
-                 
                  ]
    :extra-deps {io.github.cognitect-labs/test-runner
                 {:git/url "https://github.com/cognitect-labs/test-runner.git"

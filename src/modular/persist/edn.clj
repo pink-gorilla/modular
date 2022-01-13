@@ -1,6 +1,7 @@
 (ns modular.persist.edn
   (:require
    [taoensso.timbre :refer [debug info warnf]]
+   [clojure.java.io :as io]
    [time-literals.data-readers] ;; For literals
    [time-literals.read-write] ;; For printing/writing
    [fipp.clojure]
@@ -42,10 +43,12 @@
     (spit file-name s)
     data  ; important to be here, as save-study is used often in a threading macro
     ))
+
 (defmethod loadr :edn [_ file-name]
-  (info "loading edn file: " file-name)
-  (-> (slurp file-name)
-      (read-edn)))
+  (debug "loading edn file: " file-name)
+  (when (.exists (io/file file-name))
+    (-> (slurp file-name)
+        (read-edn))))
 
 (comment
   (save "/tmp/test3.edn" {:a 1 :b [1 3 4]})
