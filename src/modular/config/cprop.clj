@@ -37,26 +37,22 @@
 ; https://github.com/tolitius/cprop
 
 (defn load-config-cprop [app-config]
-  (let [app (if (vector? app-config)
-              (into [] (map from-map-file-res app-config))
-              [(from-map-file-res app-config)])
-        app-creds (into [] (conj app
-                                 (from-map-file-res "creds.edn")))
-        ;_ (info "app creds: " app-creds)
-        config-files (load-config
-                      :resource "webly/config.edn" ; otherwise it would search for config.edn 
-                      :merge app-creds)
+  (let [app-config-vec (if (vector? app-config)
+                         app-config
+                         [app-config])
+        app (into [] (map from-map-file-res app-config-vec))
+        ;_ (info "app configs: " app)
+        config1 (load-config
+                 :resource "modular/empty-config.edn"
+                 :merge app)
         ;_ (info "cf: " config-files)
-        ks (keys config-files)
-        config (load-config
-                :resource "webly/config.edn"
-                :merge
-                [config-files
-                 (from-system-props)
-                 (from-env) ; env otherwise has way too many settings
-                 ])
-        config (select-keys config ks)]
-    ;(info "keys: " ks)
-    ;(info "config:" config )
-    ;config-files
-    config))
+        ks (keys config1)
+        config2 (load-config
+                 :resource "modular/empty-config.edn"
+                 :merge
+                 [config1
+                  (from-system-props)
+                  (from-env) ; env otherwise has way too many settings
+                  ])
+        config2 (select-keys config2 ks)]
+    config2))

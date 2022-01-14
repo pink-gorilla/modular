@@ -1,23 +1,31 @@
 (ns modular.config.config-test
   (:require
    [clojure.test :refer [deftest is testing]]
-   [modular.config :as config :refer [load-config! config-atom add-config require-namespaces]]))
+   [modular.config :as config :refer [load-config! config-atom add-config require-namespaces]]
+   [modular.config.cprop :refer [load-config-cprop]]))
+
+(defn remove-modular [c]
+  (dissoc c :_modular))
+
+(defn remove-but-oauth [c]
+  (dissoc c  :_modular
+          :jetty-ws
+          :settings
+          :web-server-api
+          :google-analytics
+          :webly
+          :prefix
+              ;:oauth2
+          :web-server
+          :shadow
+          :keybindings
+          :timbre-loglevel))
 
 (defn c [c]
   (reset! config-atom {})
   (load-config! c)
   (-> @config-atom
-      (dissoc :jetty-ws
-              :settings
-              :web-server-api
-              :google-analytics
-              :webly
-              :prefix
-              :oauth2
-              :web-server
-              :shadow
-              :keybindings
-              :timbre-loglevel)))
+      remove-modular))
 
 (deftest config []
   (is (= {}  (c nil))) ; nil works
@@ -41,3 +49,25 @@
 (deftest require-namespaces-test []
   (let [require-result (require-namespaces ['demo.panama])]
     (is (not (= :clj-require/error require-result)))))
+
+(deftest config-cpro-merge-test []
+  (let [lca #(-> (load-config-cprop %) remove-modular)
+        lc #(-> (load-config-cprop %) remove-but-oauth)]
+    (is (= {:a 1 :b 2 :c 3}
+           (lca [{:a 1} {:b 2} {:c 3}])))
+    (is (= {:a 1 :b {:c 2 :d 3}}
+           (lca [{:a 1} {:b {:c 2}} {:b {:d 3}}])))
+
+    (is (= {:oauth2 {:github {:client-id "1" :client-secret "2"
+                              :scopes ["user:email" "gist" "repo"]}
+                     :google {:client-id "3" :client-secret "4"
+                              :scopes ["https://www.googleapis.com/auth/spreadsheets.readonly"
+                                       "https://www.googleapis.com/auth/drive.readonly"
+                                       "https://www.googleapis.com/auth/userinfo.email"]}}}
+
+           (lc ["webly/config.edn" "test/file_config.edn"
+                {:oauth2 {:github {:client-id "1" :client-secret "2"}
+                          :google {:client-id "3" :client-secret "4"}}}])))
+
+;
+    ))
