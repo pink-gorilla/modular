@@ -7,8 +7,8 @@
    ))
 
 (timbre-config!
- {:timbre-loglevel  [[#{"webly.*"} :info]
-                     [#{"*"} :info]]})
+ {:min-level [[#{"webly.*"} :info]
+              [#{"*"} :info]]})
 
 
 

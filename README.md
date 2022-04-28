@@ -28,6 +28,15 @@ contains:
 - id
   uuid
 
+## timbre log config
+
+See example in `demo/logging.clj`
+
+```
+clj -X:demo-log-default
+clj -X:demo-log-custom
+```
+
 ## webly/goldly integration
 
 webly uses modular to send the entire configuration to the browser. This works with dynamic config changes.
@@ -37,3 +46,5 @@ Goldly provides sci functions to access the configuration.
 ## unit test  
 
 `clj -M:test`
+
+clj -X:deps tree
