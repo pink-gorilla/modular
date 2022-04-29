@@ -44,7 +44,7 @@
 (defn require-ns-clj []
   (if-let [ns-clj (get-in-config [:webly :ns-clj])]
     (require-namespaces ns-clj)
-    (warn "no ns-clj defined.")))
+    (debug "no ns-clj defined.")))
 
 (defn resolve-symbol [path]
   (let [s (get-in-config path)]
@@ -66,8 +66,8 @@
 (defn load-config!
   [app-config]
   (let [config (load-config-cprop app-config)]
-    (reset! config-atom (:timbre/clj config))
-    (timbre-config! @config-atom) ; set timbre config as soon as possible
+    (reset! config-atom config)
+    (timbre-config! (:timbre/clj @config-atom)) ; set timbre config as soon as possible
     (require-ns-clj) ; requiring ns needs to happen before resolving symbols
     (resolve-symbol [:keybindings])
     (resolve-symbol [:webly :routes])

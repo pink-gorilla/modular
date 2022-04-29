@@ -19,7 +19,8 @@
           :web-server
           :shadow
           :keybindings
-          :timbre-loglevel))
+          :timbre/clj
+          :timbre/cljs))
 
 (defn c [c]
   (reset! config-atom {})

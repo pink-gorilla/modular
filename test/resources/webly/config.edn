@@ -58,7 +58,7 @@
                                      "https://www.googleapis.com/auth/drive.readonly"
                                      "https://www.googleapis.com/auth/userinfo.email"]}}
 
- :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :info]
+ :timbre/clj [[#{"pinkgorilla.nrepl.client.connection"} :info]
                    [#{"org.eclipse.jetty.*"} :info]
                    [#{"webly.*"} :info]
                    [#{"*"} :info]]
