@@ -66,7 +66,7 @@
 (defn load-config!
   [app-config]
   (let [config (load-config-cprop app-config)]
-    (reset! config-atom config)
+    (reset! config-atom (:timbre/clj config))
     (timbre-config! @config-atom) ; set timbre config as soon as possible
     (require-ns-clj) ; requiring ns needs to happen before resolving symbols
     (resolve-symbol [:keybindings])
