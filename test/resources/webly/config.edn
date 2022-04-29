@@ -58,10 +58,13 @@
                                      "https://www.googleapis.com/auth/drive.readonly"
                                      "https://www.googleapis.com/auth/userinfo.email"]}}
 
- :timbre/clj [[#{"pinkgorilla.nrepl.client.connection"} :info]
-                   [#{"org.eclipse.jetty.*"} :info]
-                   [#{"webly.*"} :info]
-                   [#{"*"} :info]]
+ :timbre/clj {:min-level [[#{"pinkgorilla.nrepl.client.connection"} :info]
+                          [#{"org.eclipse.jetty.*"} :info]
+                          [#{"webly.*"} :info]
+                          [#{"*"} :info]]
+              :appenders {:default {:type :console-color}
+                          :file {:type :file
+                                 :fname "target/webly-demo.log"}}}
 
  :keybindings demo.keybindings/default
 

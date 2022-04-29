@@ -106,5 +106,17 @@
    :exec-args {:custom-config true}
    :exec-fn logging/demo}
 
+  :demo-config
+  {:extra-paths ["demo" "test/resources" "test/src"]
+   :exec-args {:custom-config true}
+   :exec-fn config/demo}
+
+   ; tree and list are here just because tools.deps.alpha does not work on my machine
+  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+         :exec-fn clojure.tools.cli.api/tree}
+  :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+         :exec-fn clojure.tools.cli.api/list}
+
+
 ;
   }}
