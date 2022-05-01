@@ -4,6 +4,7 @@
  :deps {org.clojure/clojure    {:mvn/version "1.11.1"}
         ; logging
         com.taoensso/timbre {:mvn/version "5.2.1"} ; clj/cljs logging
+        juxt/clip {:mvn/version "0.27.0"}
         ; ids 
         com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"} ; uuid - clojurescript
         ; configuration
@@ -110,6 +111,12 @@
   {:extra-paths ["demo" "test/resources" "test/src"]
    :exec-args {:custom-config true}
    :exec-fn config/demo}
+
+  :demo-system
+  {:extra-deps {nrepl/nrepl {:mvn/version "0.9.0"}}
+   :extra-paths ["demo" "test/resources" "test/src"]
+   :exec-args {:custom-config true}
+   :exec-fn system/demo}
 
    ; tree and list are here just because tools.deps.alpha does not work on my machine
   :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
