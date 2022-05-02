@@ -3,8 +3,7 @@
    [taoensso.timbre  :refer [debug info warn error]]
    [modular.config.cprop :refer [load-config-cprop]]
    [modular.config.watch :refer [watch-config!]]
-   [modular.require :refer [require-namespaces]]
-   [modular.log :refer [timbre-config!]]
+   [modular.require :refer [resolve-symbol]]
    [modular.writer :refer [write-status]]))
 
 (defonce config-atom (atom {}))
@@ -17,40 +16,22 @@
 
 ;(swap! a assoc :comparator comparator)
 
-;; REQUIRE
+;; RESOLVE
 
-(defn require-ns-clj []
-  (if-let [ns-clj (get-in-config [:webly :ns-clj])]
-    (require-namespaces ns-clj)
-    (debug "no ns-clj defined.")))
 
-(defn resolve-symbol [path]
-  (let [s (get-in-config path)]
-    (if (symbol? s)
-      (try
-        (debug "resolving symbol: " s)
-        (if-let [r (var-get (resolve s))]
-          (do
-            (debug "symbol " s " resolved to: " r)
-            (swap! config-atom assoc-in path r)
-            r)
-          (do (error  "symbol in path [" path "] as: " s " could not get resolved!")
-              nil))
-        (catch Exception e
-          (error "Exception resolving symbol in path: " path " ex:" (pr-str e))
-          nil))
-      s)))
+(defn resolve-config-key [_ path]
+  (if-let [s (get-in-config path)]
+    (if-let [r (resolve-symbol s)]
+      (swap! config-atom assoc-in path r)
+      (error "resolve-error: resolve failed in path: " path))
+    (error "resolve-error: path path not found: " path)))
+
 
 (defn load-config!
   [app-config]
   (let [config (load-config-cprop app-config)]
     (reset! config-atom config)
-    ;(timbre-config! (:timbre/clj @config-atom)) ; set timbre config as soon as possible
-    ;(require-ns-clj) ; requiring ns needs to happen before resolving symbols
-    ;(resolve-symbol [:keybindings])
-    ;(resolve-symbol [:webly :routes])
     (write-status "config" @config-atom)
-    ;(write-status "keybindings" (get-in @config-atom [:keybindings]))
     (watch-config! config-atom)))
 
 (defn add-config [app-config user-config]

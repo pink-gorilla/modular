@@ -26,3 +26,19 @@
     (catch Exception e
       (error "Exception requiring ns-clj-vec: " (pr-str e))
       :clj-require/error)))
+
+(defn resolve-symbol [s]
+  (when (symbol? s)
+    (try
+      (debug "resolving symbol: " s)
+      (if-let [r (var-get (resolve s))]
+        (do
+          (debug "symbol " s " resolved to: " r)
+           r)
+        (do (error  "symbol [" s "] could not get resolved!")
+              nil))
+        (catch Exception e
+          (error "Exception resolving symbol " s " ex:" (pr-str e))
+          nil))
+      ))
+

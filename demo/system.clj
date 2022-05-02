@@ -6,3 +6,4 @@
 (defn myrunner [arguments system-config running-system]
   (warn "my runner. args: " arguments))
 
+(def xyz [1 2 3])

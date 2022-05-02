@@ -2,4 +2,5 @@
  :ns-clj [system ; to run custom fn via cli
           demo.keybindings ; to resolve keybindings
             ]
+ :routes system/xyz
  }

@@ -6,7 +6,11 @@
   
   :ns-require {:start (modular.require/require-namespaces
                        (:ns-clj (deref (clip/ref :config))))}
-    
+
+  :resolve-test {:start (modular.config/resolve-config-key
+                          (deref (clip/ref :config))
+                          [:routes])}
+  
   :timbre {:start (modular.log/timbre-config!
                    (:timbre/clj (deref (clip/ref :config))))}
 
