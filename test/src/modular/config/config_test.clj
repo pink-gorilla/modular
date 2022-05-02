@@ -1,7 +1,8 @@
 (ns modular.config.config-test
   (:require
    [clojure.test :refer [deftest is testing]]
-   [modular.config :as config :refer [load-config! config-atom add-config require-namespaces]]
+   [modular.require :refer [require-namespaces]]
+   [modular.config :as config :refer [load-config! config-atom add-config]]
    [modular.config.cprop :refer [load-config-cprop]]))
 
 (defn remove-modular [c]
