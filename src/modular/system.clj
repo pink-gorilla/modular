@@ -68,7 +68,7 @@
 (defn start!
   [{:keys [services config profile run]
     :or {profile :default}}]
-  (info "services:" services "config:" config "profile: " profile "run: " run)
+  (info "start! services:" services "config:" config "profile: " profile "run: " run)
   (let [system-config (load-config services {:profile profile
                                              :config config})
         {:keys [running-system]} (start-system system-config)]
