@@ -34,11 +34,10 @@
       (if-let [r (var-get (resolve s))]
         (do
           (debug "symbol " s " resolved to: " r)
-           r)
+          r)
         (do (error  "symbol [" s "] could not get resolved!")
-              nil))
-        (catch Exception e
-          (error "Exception resolving symbol " s " ex:" (pr-str e))
-          nil))
-      ))
+            nil))
+      (catch Exception e
+        (error "Exception resolving symbol " s " ex:" (pr-str e))
+        nil))))
 

@@ -18,14 +18,12 @@
 
 ;; RESOLVE
 
-
 (defn resolve-config-key [_ path]
   (if-let [s (get-in-config path)]
     (if-let [r (resolve-symbol s)]
       (swap! config-atom assoc-in path r)
       (error "resolve-error: resolve failed in path: " path))
     (error "resolve-error: path path not found: " path)))
-
 
 (defn load-config!
   [app-config]
