@@ -1,16 +1,12 @@
-{:secrets #include "secrets.edn" ;; externalised and usually "mounted" as a docker/kubernetes secret
+{:modular (modular.system/modular-env)
+ :secrets #include "secrets.edn" ;; externalised and usually "mounted" as a docker/kubernetes secret
  :components
- {:config {:start (modular.config/load-config! ["webly/config.edn" "runner.edn"]
-                                                ; #ref [:opts :config]
-                                               )}
-  
+ {:config {:start (modular.config/load-config! (:config #ref [:modular]))}
   :ns-require {:start (modular.require/require-namespaces
                        (:ns-clj (deref (clip/ref :config))))}
-
   :resolve-test {:start (modular.config/resolve-config-key
-                          (deref (clip/ref :config))
+                           (clip/ref :ns-require)
                           [:routes])}
-  
   :timbre {:start (modular.log/timbre-config!
                    (:timbre/clj (deref (clip/ref :config))))}
 
@@ -19,6 +15,8 @@
           :stop (println "bongo is stopped!")}
 
   :db {:start (println "db starting: " #ref [:secrets :db])}
+
+  :modular-test {:start (println "modular environment: " #ref [:modular])}
 
   :webly {:start (println "webly profile: " #profile {:default "watch2"
                                                       :compile "compile"

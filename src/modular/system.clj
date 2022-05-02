@@ -53,10 +53,16 @@
     (clojure.repl/set-break-handler! on-repl-break)
     {:config system-config :running-system running-system}))
 
+(defonce modular-env-atom (atom {}))
+
+(defn modular-env []
+  @modular-env-atom)
+
 (defn ^:private load-config
-  [services-edn opts]
+  [services-edn modular-opts aero-opts]
+  (reset! modular-env-atom modular-opts)
   (-> (io/resource services-edn)
-      (read-config opts)))
+      (read-config aero-opts))) ; opts: :profile :user :resolve
 
 (defn ^:private run-fn
   [arguments system-config running-system]
@@ -69,8 +75,9 @@
   [{:keys [services config profile run]
     :or {profile :default}}]
   (info "start! services:" services "config:" config "profile: " profile "run: " run)
-  (let [system-config (load-config services {:profile profile
-                                             :config config})
+  (let [system-config (load-config services {:config config
+                                             :profile profile}
+                                   {:profile profile})
         {:keys [running-system]} (start-system system-config)]
     (if run ;(seq arguments)
       (run-fn run system-config running-system) ;; application run from the command line with arguments.

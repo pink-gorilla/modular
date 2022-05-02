@@ -21,7 +21,8 @@
     (if (vector? ns-clj-vec)
       (do (info "requiring ns-clj:" ns-clj-vec)
           (doall
-           (map require-log ns-clj-vec)))
+           (map require-log ns-clj-vec))
+          ns-clj-vec)
       (error "require-namespaces ns-clj-vec should be a vector. not requiring!"))
     (catch Exception e
       (error "Exception requiring ns-clj-vec: " (pr-str e))
