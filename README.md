@@ -37,6 +37,17 @@ clj -X:demo-log-default
 clj -X:demo-log-custom
 ```
 
+## services 
+
+Modular uses juxt/clip for a services defintion.
+
+Demo of the services module:
+
+To run all services (and keep running): `clj -X:demo-system` or `clj -M:system`
+To run services, invoke a function (then end): `clj -X:demo-system :run '[1 2 3]'` or `clj -M:system 1 2 3`
+
+
+
 ## webly/goldly integration
 
 webly uses modular to send the entire configuration to the browser. This works with dynamic config changes.

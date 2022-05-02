@@ -1,12 +1,8 @@
 (ns system
   (:require
-   [taoensso.timbre :refer [info debug warn error with-context]]
-   [modular.config :refer [load-config!]]
-   [modular.system :as system]
-   ))
+   [taoensso.timbre :refer [info debug warn error with-context]]))
 
 
-(defn demo [{:keys [custom-config]}]
-  (println "demo how to start systems..") 
-  (load-config! ["webly/config.edn" "services.edn"])
-  (system/start!))
+(defn myrunner [arguments system-config running-system]
+  (warn "my runner. args: " arguments))
+

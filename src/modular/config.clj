@@ -3,6 +3,7 @@
    [taoensso.timbre  :refer [debug info warn error]]
    [modular.config.cprop :refer [load-config-cprop]]
    [modular.config.watch :refer [watch-config!]]
+   [modular.require :refer [require-namespaces]]
    [modular.log :refer [timbre-config!]]
    [modular.writer :refer [write-status]]))
 
@@ -16,30 +17,7 @@
 
 ;(swap! a assoc :comparator comparator)
 
-;; ns require 
-
-; the config is an edn file that can contain clojure symbols.
-; In order for symbols to be resolveable, the namespace of the symbol has to be loaded.
-; therefore we have a require section here.
-
-(defn require-log [n]
-  (info "clj-require:" n)
-  (try
-    (require [n])
-    (catch Exception e
-      (error "ns-clj: could not require: " n)
-      (error "Exception requiring ns-clj: " (pr-str e)))))
-
-(defn require-namespaces [ns-clj-vec]
-  (try
-    (if (vector? ns-clj-vec)
-      (do (info "requiring ns-clj:" ns-clj-vec)
-          (doall
-           (map require-log ns-clj-vec)))
-      (error "require-namespaces ns-clj-vec should be a vector. not requiring!"))
-    (catch Exception e
-      (error "Exception requiring ns-clj-vec: " (pr-str e))
-      :clj-require/error)))
+;; REQUIRE
 
 (defn require-ns-clj []
   (if-let [ns-clj (get-in-config [:webly :ns-clj])]
@@ -67,12 +45,12 @@
   [app-config]
   (let [config (load-config-cprop app-config)]
     (reset! config-atom config)
-    (timbre-config! (:timbre/clj @config-atom)) ; set timbre config as soon as possible
-    (require-ns-clj) ; requiring ns needs to happen before resolving symbols
-    (resolve-symbol [:keybindings])
-    (resolve-symbol [:webly :routes])
+    ;(timbre-config! (:timbre/clj @config-atom)) ; set timbre config as soon as possible
+    ;(require-ns-clj) ; requiring ns needs to happen before resolving symbols
+    ;(resolve-symbol [:keybindings])
+    ;(resolve-symbol [:webly :routes])
     (write-status "config" @config-atom)
-    (write-status "keybindings" (get-in @config-atom [:keybindings]))
+    ;(write-status "keybindings" (get-in @config-atom [:keybindings]))
     (watch-config! config-atom)))
 
 (defn add-config [app-config user-config]

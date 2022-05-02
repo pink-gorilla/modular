@@ -1,8 +1,18 @@
-{:webly {; clj
-         :ns-clj [demo.keybindings] ; to resolve keybindings
-         :start-service nil
+{:timbre/clj {:min-level [[#{"org.eclipse.jetty.*"} :warn]
+                          [#{"modular.oauth2.token.refresh"} :warn]
+                          [#{"*"} :info]]
+              :appenders {:default {:type :console-color}
+                          :file {:type :file
+                                 :fname "target/file.log"}
+                          :rolling {:type :file-rolling
+                                    :path "target/rolling.log"
+                                    :pattern :monthly}
+                          :workflow {:type :file-rolling-context
+                                     :context :scheduled-data-import
+                                     :path "target/workflow.log"
+                                     :pattern :monthly}}}
 
-         ; cljs
+ :webly {; cljs
          :ns-cljs []
          :modules {}
 
@@ -57,14 +67,6 @@
                    :scopes          ["https://www.googleapis.com/auth/spreadsheets.readonly"
                                      "https://www.googleapis.com/auth/drive.readonly"
                                      "https://www.googleapis.com/auth/userinfo.email"]}}
-
- :timbre/clj {:min-level [[#{"pinkgorilla.nrepl.client.connection"} :info]
-                          [#{"org.eclipse.jetty.*"} :info]
-                          [#{"webly.*"} :info]
-                          [#{"*"} :info]]
-              :appenders {:default {:type :console-color}
-                          :file {:type :file
-                                 :fname "target/webly-demo.log"}}}
 
  :keybindings demo.keybindings/default
 
