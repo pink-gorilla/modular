@@ -56,6 +56,8 @@
   (describe  "public/ag-grid-community/dist/")
   (describe "public/ag-grid-community/")
 
+  (describe-files "modular/encoding")
+
   (describe-recursive "public")
 
   (require '[clojure.pprint :refer [print-table]])

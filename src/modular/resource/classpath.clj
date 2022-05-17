@@ -29,6 +29,10 @@
         dir?  (.isDirectory file)]
     dir?))
 
+(defn file-path [url]
+  (let [file (io/as-file url)]
+    (.getPath file)))
+
 (defn describe-url [res-path url]
   (let [scheme (url-scheme url)
         name (url-name url)
@@ -42,11 +46,15 @@
                name) ; 
         name-full (str res-path
                        (if (str/ends-with? res-path "/") "" "/")
-                       name)]
-    {:scheme scheme
-     :name name
-     :name-full name-full
-     :dir? (case scheme
-             "jar" (if (rs/directory? url) true false)
-             "file" (file-dir? url)
-             :bongo)}))
+                       name)
+        both {:scheme scheme
+              :name name
+              :name-full name-full
+              :dir? (case scheme
+                      "jar" (if (rs/directory? url) true false)
+                      "file" (file-dir? url)
+                      :bongo)}]
+
+    (if (= scheme "file")
+      (assoc both :path (file-path url)) ; path is important for saving.
+      both)))
