@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as timbre]
    [taoensso.timbre.appenders.core :refer [println-appender spit-appender]]
-   [taoensso.timbre.appenders.3rd-party.rolling :refer [rolling-appender]]))
+   [taoensso.timbre.appenders.community.rolling :refer [rolling-appender]]))
 
 (defn color-appender [& [opts]]
   (let [colors {:info :green,
