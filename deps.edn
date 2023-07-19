@@ -18,8 +18,8 @@
         resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
         hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
         ; encoding edn/transit/json
-        com.cognitect/transit-clj {:mvn/version  "0.8.319"} ; transit
-        com.cognitect/transit-cljs {:mvn/version  "0.8.256"} ; transit
+        com.cognitect/transit-clj {:mvn/version  "1.0.333"} ; transit
+        com.cognitect/transit-cljs {:mvn/version  "0.8.280"} ; transit
         fipp/fipp {:mvn/version "0.6.25"} ; edn pretty printing
         cheshire/cheshire {:mvn/version "5.10.2"}  ; JSON parsings and pretty printing
         ; time encoding
@@ -30,7 +30,7 @@
         ; image encoding
         org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
         ; taggedreader encoding
-        io.replikativ/incognito {:mvn/version "0.2.7"  ; serialize any object
+        io.replikativ/incognito {:mvn/version "0.3.6"  ; serialize any object
                                  :exclusions [com.cognitect/fress]} ; fress makes problems
         bidi/bidi {:mvn/version "2.1.6"}}
 
