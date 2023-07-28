@@ -2,10 +2,14 @@
   (:require
    [modular.encoding.bidi :refer [bidi-edn-tag]]
    [modular.encoding.time :as time]
-   [time-literals.data-readers] ;; For literals
+   #?(:clj  [time-literals.data-readers] ;; For literals
+      :cljs [time-literals.data-readers-cljs])
    [time-literals.read-write] ;; For printing/writing
    #?(:clj [clojure.edn :as edn]
       :cljs [cljs.reader :as edn])))
+
+; com.widdindustries/time-literals
+; https://github.com/henryw374/time-literals/tree/master/src/time_literals
 
 (defn default-reader
   "A default reader, for when we don't know what's coming in."
