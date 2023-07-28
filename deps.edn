@@ -23,7 +23,7 @@
         fipp/fipp {:mvn/version "0.6.25"} ; edn pretty printing
         cheshire/cheshire {:mvn/version "5.10.2"}  ; JSON parsings and pretty printing
         ; time encoding
-        tick/tick {:mvn/version "0.5.0-RC5"} ; replacement for clj-time
+        tick/tick {:mvn/version "0.6.2"} ; replacement for clj-time
         clojure.java-time/clojure.java-time {:mvn/version "0.3.3"}
         com.andrewmcveigh/cljs-time {:mvn/version  "0.5.2"}
         time-literals/time-literals {:mvn/version "0.1.5"}
