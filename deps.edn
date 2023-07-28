@@ -26,7 +26,7 @@
         tick/tick {:mvn/version "0.6.2"} ; replacement for clj-time
         clojure.java-time/clojure.java-time {:mvn/version "0.3.3"}
         com.andrewmcveigh/cljs-time {:mvn/version  "0.5.2"}
-        time-literals/time-literals {:mvn/version "0.1.5"}
+        com.widdindustries/time-literals {:mvn/version "0.1.10"} ; also used by tick
         ; image encoding
         org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
         ; taggedreader encoding

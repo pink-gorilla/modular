@@ -25,3 +25,7 @@ goldly_bindings_generated.cljs
 rdocument/
 .nrepl-port
 .clj-kondo
+*~
+\#*\#
+.\#*
+.~*
