@@ -17,9 +17,9 @@ contains:
   since we support symbols in edn files, we have a way to load namespaces
 
   config state edn fils are HUMAN readable.
-  
-- persistence (save txt/edn/json) 
-  we add serialization for java/localdatetime 
+
+- persistence (save txt/edn/json)
+  we add serialization for java/localdatetime
 
 - exploration
   filesystem exploration
@@ -37,14 +37,15 @@ clj -X:demo-log-default
 clj -X:demo-log-custom
 ```
 
-## services 
+## services
 
 Modular uses juxt/clip for a services defintion.
 
 Demo of the services module:
 
 To run all services (and keep running): `clj -X:demo-system` or `clj -M:system`
-To run services, invoke a function (then end): `clj -X:demo-system :run '[1 2 3]'` or `clj -M:system 1 2 3`
+To run services, invoke a function (then end): `clj -X:demo-system:run :task '[1 2 3]'`
+or `clj -M:system 1 2 3`
 
 
 
@@ -54,7 +55,7 @@ webly uses modular to send the entire configuration to the browser. This works w
 
 Goldly provides sci functions to access the configuration.
 
-## unit test  
+## unit test
 
 `clj -M:test`
 

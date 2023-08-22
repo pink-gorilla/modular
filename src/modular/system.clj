@@ -5,26 +5,28 @@
    [taoensso.timbre  :refer [debug info warn error]]
    [aero.core :refer [read-config]]
    [juxt.clip.core :as clip]
-   [clojure.repl]
-   [modular.config :refer [get-in-config]])
+   [clojure.repl])
   (:gen-class))
+
+; run a function on startup
 
 (defn run-safe [run-fn arguments system-config running-system]
   (try
     (info "running: " run-fn)
-    (if-let [f (resolve run-fn)]
-      (f arguments system-config running-system)
+    (if-let [f (-> run-fn requiring-resolve var-get)]
+      (f (merge {:system-config system-config
+                 :running-system running-system}
+                arguments))
       (error "run-fn [" run-fn "] could not get resolved!"))
     (catch Exception e
       (error "Exception running run-fn: " (pr-str e)))))
 
-(defn ^:private runner
-  [arguments system-config running-system]
-  (let [run-fn (get-in-config [:runner])]
-    (if run-fn
-      (run-safe run-fn arguments system-config running-system)
-      (error "run-fn not found: " run-fn "please define [:runner] in config!"))))
-
+(defn ^:private run-fn
+  [run-fn arguments system-config running-system]
+  (run-safe run-fn arguments system-config running-system)
+  (System/exit 0)
+;(stop-system {:running-system running-system :system-config system-config})
+  )
 (defn log-uncaught-exceptions []
   (Thread/setDefaultUncaughtExceptionHandler
    (reify Thread$UncaughtExceptionHandler
@@ -37,7 +39,7 @@
   (System/exit 0))
 
 (defn stop-system [{:keys [system-config running-system]}]
-  (info "stopping clip services: " (-> running-system keys)) ; :components 
+  (info "stopping clip services: " (-> running-system keys)) ; :components
   (clip/stop system-config running-system)
   (shutdown-agents))
 
@@ -64,23 +66,17 @@
   (-> (io/resource services-edn)
       (read-config aero-opts))) ; opts: :profile :user :resolve
 
-(defn ^:private run-fn
-  [arguments system-config running-system]
-  (runner arguments system-config running-system)
-  (System/exit 0)
-  ;(stop-system {:running-system running-system :system-config system-config})
-  )
-
 (defn start!
   [{:keys [services config profile run]
-    :or {profile :default}}]
+    :or {profile :default}
+    :as arguments}]
   (info "start! services:" services "config:" config "profile: " profile "run: " run)
   (let [system-config (load-config services {:config config
                                              :profile profile}
                                    {:profile profile})
         {:keys [running-system]} (start-system system-config)]
     (if run ;(seq arguments)
-      (run-fn run system-config running-system) ;; application run from the command line with arguments.
+      (run-fn run arguments system-config running-system) ;; application run from the command line with arguments.
       @(promise) ;; application run from the command line, no arguments, keep webserver running.
       )))
 
@@ -105,5 +101,3 @@
              :profile profile
              :config config
              :run arguments})))
-
-
