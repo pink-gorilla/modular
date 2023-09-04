@@ -57,6 +57,13 @@ Goldly provides sci functions to access the configuration.
 
 ## unit test
 
+clj:
 `clj -M:test`
 
-clj -X:deps tree
+cljs:
+```clj -X:webly:npm-install
+   clj -X:webly:build-ci
+   npm test
+```
+
+

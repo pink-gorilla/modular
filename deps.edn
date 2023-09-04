@@ -71,7 +71,7 @@
    :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
 
   :test
-  {:extra-paths ["test/src"
+  {:extra-paths ["test"
                  "test/resources"]
    :extra-deps {io.github.cognitect-labs/test-runner
                 {:git/url "https://github.com/cognitect-labs/test-runner.git"
@@ -83,21 +83,18 @@
           :extra-deps {nrepl/nrepl {:mvn/version "0.9.0"}}
           :main-opts  ["-m" "nrepl.cmdline"]}
 
-  :npm-install {:extra-paths ["test"]
-                :extra-deps {;org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
-                             org.pinkgorilla/webly {:mvn/version "0.4.594"
-                                                    :exclusions  [org.pinkgorilla/modular]}}
-                :exec-fn webly.app.app/webly-run
-                :exec-args {:config nil
-                            :profile "npm-install"}}
+  :webly {:extra-paths ["test"]
+          :extra-deps {;org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+                       org.pinkgorilla/webly {:mvn/version "0.4.623"
+                                              :exclusions  [org.pinkgorilla/modular]}}
+          :exec-fn webly.app.app/webly-build
+          :exec-args {:config "webly/config.edn"
+                      :profile "npm-install"}}
 
-  :build-cljs-test {:extra-paths ["test"]
-                    :extra-deps {;org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
-                                 org.pinkgorilla/webly {:mvn/version "0.4.594"
-                                                        :exclusions  [org.pinkgorilla/modular]}}
-                    :exec-fn webly.app.app/webly-run
-                    :exec-args {:config nil
-                                :profile "ci"}}
+  :npm-install {:exec-args {:profile "npm-install"}}
+  :build-ci {:exec-args {:profile "ci"}}
+  
+;  :build-cljs-test 
 
 
   :demo-log-default

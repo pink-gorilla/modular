@@ -2,7 +2,7 @@
   (:require
    [cognitect.transit :as transit]
    [modular.encoding.bidi :as bidi]
-   [modular.encoding.time :as time])
+   [modular.encoding.time2 :as time])
   #?(:clj (:import [java.io ByteArrayInputStream ByteArrayOutputStream])))
 
 ; another encoding option:

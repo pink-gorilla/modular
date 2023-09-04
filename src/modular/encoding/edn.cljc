@@ -1,7 +1,7 @@
 (ns modular.encoding.edn
   (:require
    [modular.encoding.bidi :refer [bidi-edn-tag]]
-   [modular.encoding.time :as time]
+   ;[modular.encoding.time :as time]
    #?(:clj  [time-literals.data-readers] ;; For literals
       :cljs [time-literals.data-readers-cljs])
    [time-literals.read-write] ;; For printing/writing

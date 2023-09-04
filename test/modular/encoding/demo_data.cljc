@@ -4,6 +4,6 @@
    [modular.encoding.bidi :refer [demo-bidi-tag]]))
 
 (def demo-data {:a 34
-               ; :date (now-local)
+                :date-local (now-local)
                 :date (now-date)
                 :b demo-bidi-tag})
