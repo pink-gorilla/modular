@@ -2,14 +2,13 @@
   (:require
    [taoensso.timbre :refer [debug info warnf]]
    [clojure.java.io :as io]
-   [time-literals.data-readers] ;; For literals
-   [time-literals.read-write] ;; For printing/writing
    [fipp.clojure]
-   [fipp.ednize]
    [clojure.edn]
    [modular.encoding.edn :refer [read-edn]]
    [modular.helper.date :refer [now-str]]
-   [modular.persist.protocol :refer [save loadr]])
+   [modular.persist.protocol :refer [save loadr]]
+   [modular.encoding.fipp] ; side-effects
+   )
   (:import (java.io StringWriter)))
 
 ; fast, but no pretty-print (makes it difficult to detect bugs)
@@ -26,14 +25,6 @@
   (let [sw (StringWriter.)]
     (fipp.clojure/pprint data {:width 60 :writer sw :print-meta true})
     (str sw)))
-
-(extend-protocol fipp.ednize/IEdn
-  java.time.LocalDate
-  (fipp.ednize/-edn [x]
-    (tagged-literal 'time/date (str x)))
-  java.time.LocalDateTime
-  (fipp.ednize/-edn [x]
-    (tagged-literal 'time/date-time (str x))))
 
 (defmethod save  :edn [_ file-name data]
   (info "saving edn file: " file-name)
