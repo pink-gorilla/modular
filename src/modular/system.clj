@@ -43,12 +43,15 @@
   (clip/stop system-config running-system)
   (shutdown-agents))
 
+(def system nil)
+
 (defn start-system [system-config]
   (info "starting clip services: " (-> system-config :components keys))
   (let [running-system (clip/start system-config)
         on-stop (fn []
                   (stop-system {:system-config system-config
                                 :running-system running-system}))]
+    (alter-var-root #'system (constantly running-system))
     (.addShutdownHook
      (Runtime/getRuntime)
      (new Thread on-stop)) ; equivalent to: (Thread. on-stop))
