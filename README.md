@@ -28,14 +28,6 @@ contains:
 - id
   uuid
 
-## timbre log config
-
-See example in `demo/logging.clj`
-
-```
-clj -X:demo-log-default
-clj -X:demo-log-custom
-```
 
 ## services
 
