@@ -1,6 +1,5 @@
 (ns modular.resource.explore
   (:require
-   [taoensso.timbre :refer [debug info warnf]]
    [resauce.core :as rs]
    [modular.resource.classpath :refer [describe-url url-name]]))
 

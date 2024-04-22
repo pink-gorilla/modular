@@ -126,6 +126,17 @@
   :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
          :exec-fn clojure.tools.cli.api/list}
 
+  
+ :nrepl
+{:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}
+              cider/cider-nrepl {:mvn/version,"0.27.2"}
+              cider/piggieback {:mvn/version "0.4.2"}
+              org.pinkgorilla/ui-highlightjs {:mvn/version "0.1.17"}}
+ :main-opts ["-m" "nrepl.cmdline"
+             "-b" "0.0.0.0"
+             "-p" "9100"
+                        ;"--middleware" "[cider.nrepl/cider-middleware,refactor-nrepl.middleware/wrap-refactor]"
+             ]}
 
 ;
   }}

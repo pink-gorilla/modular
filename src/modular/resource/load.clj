@@ -1,6 +1,5 @@
 (ns modular.resource.load
   (:require
-   [taoensso.timbre :refer [debug info warnf]]
    [clojure.java.io :as io]
    [babashka.fs :refer [create-dirs]]
    [modular.resource.explore :refer [describe-recursive-files]]))
