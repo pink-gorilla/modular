@@ -1,7 +1,8 @@
 (ns modular.date
   (:require
    [tick.core :as t]
-   #?(:clj [java-time]))
+   ;#?(:clj [java-time])
+   )
   #?(:clj (:import
            [java.util Date]
            [java.text SimpleDateFormat]
@@ -21,10 +22,6 @@
      (tostring (now))))
 
 ;; local datetime
-
-#_(defn now-local []
-    (java-time/truncate-to
-     (LocalDateTime/now) :seconds))
 
 (defn now-local []
   (-> (t/now)

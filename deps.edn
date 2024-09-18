@@ -14,7 +14,7 @@
         ; differ
         lambdaisland/deep-diff2 {:mvn/version "2.0.108"} ; differ
         ; files and resources
-        babashka/fs {:mvn/version "0.1.1"}
+        babashka/fs {:mvn/version "0.5.21"}
         resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
         hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
         ; encoding edn/transit/json
@@ -24,7 +24,8 @@
         cheshire/cheshire {:mvn/version "5.10.2"}  ; JSON parsings and pretty printing
         ; time encoding
         tick/tick {:mvn/version "0.6.2"} ; replacement for clj-time
-        clojure.java-time/clojure.java-time {:mvn/version "0.3.3"}
+        ; 20240917 removed dep to clojure.java-time. we only use tick really
+        ;clojure.java-time/clojure.java-time {:mvn/version "0.3.3"} this caused clojure errors.
         com.andrewmcveigh/cljs-time {:mvn/version  "0.5.2"}
         com.widdindustries/time-literals {:mvn/version "0.1.10"} ; also used by tick
         ; image encoding
@@ -52,7 +53,7 @@
 
  ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
   :lint
-  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.08.29"}}
    :main-opts ["-m" "clj-kondo.main"
                "--lint"
                "src" "test"
@@ -121,10 +122,10 @@
                         ]}
 
    ; tree and list are here just because tools.deps.alpha does not work on my machine
-  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/tree}
-  :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/list}
+  ;:tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+  ;       :exec-fn clojure.tools.cli.api/tree}
+  ;:list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+  ;       :exec-fn clojure.tools.cli.api/list}
 
   
  :nrepl

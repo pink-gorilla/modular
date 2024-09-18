@@ -49,7 +49,5 @@
   (loadr "document/notebook.image/notebook.edn")
   (loadr "document/notebook.apple/notebook.edn")
 
-  (fipp.clojure/pprint x)
-
 ;  
   )
