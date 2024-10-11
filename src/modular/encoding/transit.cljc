@@ -35,6 +35,11 @@
        (transit/write writer data)
        (.toString out))))
 
+#?(:cljs
+   (defn write-transit [data]
+     (let [writer (transit/writer :json encode)]
+       (transit/write writer data))))
+
 #?(:clj
    (defn string->stream
      ([s] (string->stream s "UTF-8"))
@@ -48,6 +53,11 @@
      (let [in (string->stream json)
            reader (transit/reader in :json decode)]
        (transit/read reader))))
+
+#?(:cljs
+   (defn read-transit [data]
+     (let [reader (transit/reader :json decode)]
+       (transit/read reader data))))
 
 #?(:clj
    (defn spit-transit [filename data]
