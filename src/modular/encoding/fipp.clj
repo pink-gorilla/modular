@@ -2,15 +2,34 @@
   (:require
    [time-literals.data-readers] ;; For literals
    [time-literals.read-write] ;; For printing/writing
-   [fipp.ednize]))
+   [fipp.ednize])
+  (:import
+   [java.time Period
+    LocalDate
+    LocalDateTime
+    ZonedDateTime
+    OffsetTime
+    Instant
+    OffsetDateTime
+    ZoneId
+    DayOfWeek
+    LocalTime
+    Month
+    Duration
+    Year
+    YearMonth
+    MonthDay]))
 
 (extend-protocol fipp.ednize/IEdn
-  java.time.LocalDate
+  LocalDate
   (fipp.ednize/-edn [x]
     (tagged-literal 'time/date (str x)))
-  java.time.LocalDateTime
+  LocalDateTime
   (fipp.ednize/-edn [x]
     (tagged-literal 'time/date-time (str x)))
-  java.time.Instant
+  ZonedDateTime
+  (fipp.ednize/-edn [x]
+    (tagged-literal 'time/zoned-date-time (str x)))
+  Instant
   (fipp.ednize/-edn [x]
     (tagged-literal 'time/instant (str x))))
