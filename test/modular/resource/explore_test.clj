@@ -3,7 +3,7 @@
    [clojure.test :refer [deftest is]]
    [modular.file.explore :as filesystem]
    [modular.resource.explore :as resource]
-   [modular.test-init] ; side effects
+  ;[modular.test-init] ; side effects
    ))
 (defn without-path [l]
   (map #(dissoc % :path) l))
