@@ -34,3 +34,14 @@
   (ensure-directory "./target/webly/public")
   (let [filename (str "./target/webly/public/" name ".edn")]
     (write filename data)))
+
+(defn write-edn-private [name data]
+  (ensure-directory "./.gorilla")
+  (let [filename (str "./.gorilla" name ".edn")]
+    (write filename data)))
+
+(defn write-edn-public [name data]
+  (ensure-directory "./.gorilla")
+  (ensure-directory "./.gorilla/public")
+  (let [filename (str "./.gorilla/public" name ".edn")]
+    (write filename data)))
