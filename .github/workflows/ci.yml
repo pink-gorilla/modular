@@ -32,8 +32,9 @@ jobs:
       shell: bash
     - name: test-clj
       run: clojure -M:test
-    - name: test-cljs
-      run: ./cljs-test.sh
+    # todo: no useable sandbox / chromium  
+    #- name: test-cljs
+    #  run: ./cljs-test.sh
     - name: Release
       if: success()
       # if: github.event_name == 'push'
