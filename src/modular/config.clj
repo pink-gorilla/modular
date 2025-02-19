@@ -4,7 +4,7 @@
    [modular.config.cprop :refer [load-config-cprop]]
    [modular.config.watch :refer [watch-config!]]
    [modular.require :refer [resolve-symbol]]
-   [modular.writer :refer [write-status]]))
+   [modular.writer :refer [write-edn-private]]))
 
 (defonce config-atom (atom {}))
 
@@ -29,7 +29,7 @@
   [app-config]
   (let [config (load-config-cprop app-config)]
     (reset! config-atom config)
-    (write-status "config" @config-atom)
+    (write-edn-private "config" @config-atom)
     (watch-config! config-atom)))
 
 (defn add-config [app-config user-config]
