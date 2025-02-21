@@ -11,8 +11,9 @@
 (defn load-config!
   [app-config]
   (let [config (load-config-cprop app-config)]
+    (write-edn-private "config" config)
     (reset! config-atom config)
-    (write-edn-private "config" @config-atom)))
+    config-atom))
 
 (defn add-config [app-config user-config]
   (let [app-config (if (vector? app-config) app-config [app-config])
