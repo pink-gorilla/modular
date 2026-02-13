@@ -1,3 +1,3 @@
 ; auto-generated 
-{:_modular "this config is managed by modular",
+{:_modular "this config was auto-generated",
  :ns-clj [demo.super]}

@@ -45,6 +45,7 @@
   (shutdown-agents))
 
 (def system nil)
+(defonce system-a (atom nil))
 
 ;; since safely-derive-parts is a private var, we need to extend clip with in-ns
 
@@ -74,6 +75,7 @@
                   (stop-system {:system-config system-config
                                 :running-system running-system}))]
     (alter-var-root #'system (constantly running-system))
+    (reset! system-a running-system)
     (.addShutdownHook
      (Runtime/getRuntime)
      (new Thread on-stop)) ; equivalent to: (Thread. on-stop))

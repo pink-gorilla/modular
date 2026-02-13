@@ -1,6 +1,6 @@
 {:paths ["src"]
  :deps
- {org.clojure/clojure    {:mvn/version "1.11.3"}
+ {org.clojure/clojure    {:mvn/version "1.12.4"}
   org.pinkgorilla/modular {:local/root ".." :deps/manifest :deps}}
 
  :aliases
