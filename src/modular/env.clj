@@ -1,8 +1,7 @@
 (ns modular.env
   (:require
    [clojure.string :as str])
-  (:gen-class)
-  )
+  (:gen-class))
 
 (defn env [s]
   (str/replace s #"\$\{([^}]+)\}"
