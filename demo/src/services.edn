@@ -3,14 +3,12 @@
  :components
  {:config {:start (modular.config/load-config! (:config #ref [:modular]))}
 
+  :env {:start (modular.env/env "${QUANTASTORE}/bongo")}
   :ns-require {:start (modular.require/require-namespaces
                       (:ns-clj (deref (clip/ref :config))))}
-
-  :timbre {:start (modular.log/timbre-config!
-                   (:timbre/clj (deref (clip/ref :config))))}
-
+  
   :bongo {:start (println "bongo is started! config: "
-                          (:web-server (deref (clip/ref :config))))
+                           (clip/ref :env))
           :stop (println "bongo is stopped!")}
 
   :db {:start (println "db starting: " #ref [:secrets :db])}

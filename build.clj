@@ -4,7 +4,7 @@
    [deps-deploy.deps-deploy :as dd]))
 
 (def lib 'org.pinkgorilla/modular)
-(def version (format "0.2.%s" (b/git-count-revs nil)))
+(def version (format "0.3.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
 (def jar-file (format "target/%s-%s.jar" (name lib) version))
