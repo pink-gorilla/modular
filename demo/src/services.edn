@@ -5,15 +5,18 @@
 
   :env {:start (modular.env/env "${QUANTASTORE}/bongo")}
   :ns-require {:start (modular.require/require-namespaces
-                      (:ns-clj (deref (clip/ref :config))))}
+                       (:ns-clj (deref (clip/ref :config))))}
   
   :bongo {:start (println "bongo is started! config: "
-                           (clip/ref :env))
+                          (clip/ref :env))
           :stop (println "bongo is stopped!")}
 
-  :db {:start (println "db starting: " #ref [:secrets :db])}
+  :db {:start (println "db starting: " #ref [:secrets :db])
+       :stop (println "db stopping.. ")}
 
   :modular-test {:start (println "modular environment: " #ref [:modular])}
+
+  :bad-assert {:start (demo.bongo/start-bongo false)}
 
   :webly {:start (println "webly profile: " #profile {:default "watch2"
                                                       :compile "compile"
