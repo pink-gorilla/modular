@@ -97,8 +97,7 @@
   "starts a clip system "
   [{:keys [services config profile run version]
     :or {profile :default
-         version "default"
-         }
+         version "default"}
     :as arguments}]
   (info "start! services:" services " config:" config " profile: " profile  " version: " version  " run: " run)
   (let [system-config (load-config services {:config config
