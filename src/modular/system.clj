@@ -95,12 +95,15 @@
 
 (defn start!
   "starts a clip system "
-  [{:keys [services config profile run]
-    :or {profile :default}
+  [{:keys [services config profile run version]
+    :or {profile :default
+         version "default"
+         }
     :as arguments}]
-  (info "start! services:" services "config:" config "profile: " profile "run: " run)
+  (info "start! services:" services " config:" config " profile: " profile  " version: " version  " run: " run)
   (let [system-config (load-config services {:config config
-                                             :profile profile}
+                                             :profile profile
+                                             :version version}
                                    {:profile profile})
         {:keys [running-system]} (start-system system-config)]
     (if run ;(seq arguments)
