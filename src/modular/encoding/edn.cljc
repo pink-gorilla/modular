@@ -1,6 +1,5 @@
 (ns modular.encoding.edn
   (:require
-   [modular.encoding.bidi :refer [bidi-edn-tag]]
    ;[modular.encoding.time :as time]
    #?(:clj  [time-literals.data-readers] ;; For literals
       :cljs [time-literals.data-readers-cljs])
@@ -16,12 +15,8 @@
   [t v]
   {:tag t :value v})
 
-; this would be an option too. 
-#_(defrecord TaggedValue [tag value])
-
 (def data-readers
-  (merge bidi-edn-tag
-         time-literals.read-write/tags))
+  time-literals.read-write/tags)
 
 #?(:clj
    (defn read-edn [s]

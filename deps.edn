@@ -28,9 +28,9 @@
         ; image encoding
         org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
         ; taggedreader encoding
-        io.replikativ/incognito {:mvn/version "0.3.66"  ; serialize any object
-                                 :exclusions [com.cognitect/fress]} ; fress makes problems
-        bidi/bidi {:mvn/version "2.1.6"}
+        org.replikativ/incognito {:mvn/version "0.3.69"}
+        ;io.replikativ/incognito  {:mvn/version "0.3.66"  :exclusions [com.cognitect/fress]} ; fress makes problems 
+        
         }
 
  :aliases
@@ -81,7 +81,7 @@
   :build-ci {:exec-args {:profile "ci"}}
   
 ;  :build-cljs-test 
-
+  
 
 ;
   }}
