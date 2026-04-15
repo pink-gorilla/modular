@@ -4,17 +4,17 @@
    [taoensso.timbre  :refer [debug info warn error]]
    [cprop.core :refer [load-config]]
    [cprop.source :refer [from-env from-system-props from-resource from-file]]
-   [modular.encoding.edn :as e]))
+   [ednx.handler :refer [data-readers-a]]))
 
 ;; cprop
 (defn- load-from-file [filename]
   (info "loading config from file:" filename)
-  (binding [*data-readers* e/data-readers]
+  (binding [*data-readers* @data-readers-a]
     (from-file filename)))
 
 (defn- load-from-resource [name]
   (info "loading config from resource:" name)
-  (binding [*data-readers* e/data-readers]
+  (binding [*data-readers* @data-readers-a]
     (from-resource name)))
 
 (defn- from-map-file-res [config]

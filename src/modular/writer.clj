@@ -1,19 +1,15 @@
 (ns modular.writer
   (:require
    [clojure.java.io :as io]
-   [fipp.clojure]))
+   [ednx.fipp :refer [spit-fipp-comment]]
+   [ednx.tick.edn :refer [add-tick-edn-handlers!]]
+   [ednx.tick.fipp :refer [add-tick-fipp-printers!]]))
 
-; fast, but no pretty-print (makes it difficult to detect bugs)
-
-#_(defn write [filename data]
-    (spit filename  (pr-str data)))
+(add-tick-edn-handlers!)
+(add-tick-fipp-printers!)
 
 (defn write [filename data]
-  (let [comment "; auto-generated \r\n"
-        s (with-out-str
-            (fipp.clojure/pprint data {:width 60}))
-        s (str comment s)]
-    (spit filename s)))
+  (spit-fipp-comment filename data "auto-generated"))
 
 (defn ensure-directory [path]
   (when-not (.exists (io/file path))

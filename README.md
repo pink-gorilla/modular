@@ -18,15 +18,11 @@ contains:
 
   config state edn fils are HUMAN readable.
 
-- persistence (save txt/edn/json)
-  we add serialization for java/localdatetime
-
 - exploration
   filesystem exploration
   watch for changes in folders
 
-- id
-  uuid
+
 
 
 ## services
@@ -57,5 +53,18 @@ cljs:
    clj -X:webly:build-ci
    npm test
 ```
+
+
+# TODO
+
+get rid of modular.dates
+;;ag --clojure modular.date
+;;pink-gorilla/shadow-x/shadowx/src/shadowx/build/prefs.clj
+;;pink-gorilla/shadow-x/shadowx/src/shadowx/build/npm_writer.clj
+;;pink-gorilla/goldly/src-unused/bindings.clj
+;;pink-gorilla/webly/demo/src/demo/handler/time.clj
+;;pink-gorilla/token/demo/src/demo/time.clj
+;;pink-gorilla/clj-service/demo/src/demo/time.clj
+;;pink-gorilla/modular/src/modular/date.cljc
 
 

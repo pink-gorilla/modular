@@ -1,9 +1,8 @@
 (ns demo.system
-  (:require 
+  (:require
    [juxt.clip.core :as clip]
    [demo.super]
-   [modular.system]
-   ))
+   [modular.system]))
 
 (-> 'demo.super/secret requiring-resolve)
 
@@ -15,22 +14,17 @@
       (deref v))))
 
 (+ 1000000
-(lookup 'demo.super/secret)   
-   )
+   (lookup 'demo.super/secret))
 
 (binding [demo.super/secret 8]
   (+ 1000000
-     (lookup 'demo.super/secret))
-  )
+     (lookup 'demo.super/secret)))
 
 (def system-config
   {:components
    {:c {:start '(concat (clip/ref :b) [:c])}
     :a {:start {:a 1}}
-    :b {:start [(clip/ref :a) :b]}
-    }})
-
-
+    :b {:start [(clip/ref :a) :b]}}})
 
 (clip/orderby-start system-config)
 

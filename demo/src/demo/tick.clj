@@ -1,11 +1,7 @@
 (ns demo.tick
-  (:require 
-    [cljc.java-time.zone-id :refer [get-available-zone-ids]]
-   )
-  )
+  (:require
+   [cljc.java-time.zone-id :refer [get-available-zone-ids]]))
 
- 
- 
 (get-available-zone-ids)
 ;; => #{"Asia/Aden" "America/Cuiaba" "Etc/GMT+9" "Etc/GMT+8" "Africa/Nairobi" 
 ;; "America/Marigot" "Asia/Aqtau" "Pacific/Kwajalein" "America/El_Salvador" "Asia/Pontianak"
