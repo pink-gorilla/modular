@@ -57,7 +57,11 @@ cljs:
 
 # TODO
 
-get rid of modular.dates
+## modular.writer
+move to extension. this is used to write extensions.
+
+
+## get rid of modular.date
 ;;ag --clojure modular.date
 ;;pink-gorilla/shadow-x/shadowx/src/shadowx/build/prefs.clj
 ;;pink-gorilla/shadow-x/shadowx/src/shadowx/build/npm_writer.clj
@@ -67,4 +71,14 @@ get rid of modular.dates
 ;;pink-gorilla/clj-service/demo/src/demo/time.clj
 ;;pink-gorilla/modular/src/modular/date.cljc
 
+## get rid of modular.file
+;; pink-gorilla/goldly/goldly-sci/src/goldly/devtools/cljs_load.clj
+;; pink-gorilla/goldly/goldly-sci/src/goldly/devtools/watch.clj
+
+## get rid of modular.explore
+pink-gorilla/goldly/src-unused/config/runtime/cljs_autoload_files.clj
+pink-gorilla/goldly/goldly-sci/src/goldly/devtools/cljs_load.clj
+pink-gorilla/extension/src/extension.clj
+pink-gorilla/reval/reval/src/reval/namespace/explore.clj
+pink-gorilla/reval/reval/src/reval/collection.clj
 

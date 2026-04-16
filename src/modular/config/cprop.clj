@@ -4,7 +4,9 @@
    [taoensso.timbre  :refer [debug info warn error]]
    [cprop.core :refer [load-config]]
    [cprop.source :refer [from-env from-system-props from-resource from-file]]
-   [ednx.handler :refer [data-readers-a]]))
+   [ednx.handler :refer [data-readers-a]]
+   [modular.env :refer [env]]
+   ))
 
 ;; cprop
 (defn- load-from-file [filename]
@@ -27,6 +29,10 @@
 
     (.exists (io/file config))
     (load-from-file config)
+
+    ; allow env-syntax ${ENV-VAR} in config filenames
+    (.exists (io/file (env config)))
+    (load-from-file (env config))
 
     (io/resource config)
     (load-from-resource config)

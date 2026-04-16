@@ -5,8 +5,6 @@
    [hawk.core :as hawk]
    [modular.ws.core :refer [send! send-all! send-response]]))
 
-;; this is used in goldly sci-cljs watching.
-;; it needs refactoring to make it more flexible.
 
 (defn load-file! [filename]
   (let [code (slurp filename)]

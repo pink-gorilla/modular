@@ -5,6 +5,7 @@
    [taoensso.timbre  :refer [debug info warn error]]
    [aero.core :refer [read-config]]
    [juxt.clip.core :as clip]
+   [modular.clip-patch] ; side-effects
    [clojure.repl])
   (:gen-class))
 
@@ -47,29 +48,12 @@
 (def system nil)
 (defonce system-a (atom nil))
 
-;; since safely-derive-parts is a private var, we need to extend clip with in-ns
-
-(in-ns 'juxt.clip.core)
-
-(defn orderby-start
-  ([system-config]
-   (orderby-start system-config (keys (:components system-config))))
-  ([system-config component-ks]
-   (let [{:keys [components]} system-config
-         [_ component-chain] (safely-derive-parts components [] component-ks)
-         component-ks-sorted (map first component-chain)]
-     component-ks-sorted)))
-
-(in-ns 'modular.system)
-
-(require '[juxt.clip.core :refer [orderby-start]])
-
 (defn orderby-edn [system-config]
   (-> system-config :components keys))
 
 (defn start-system [system-config]
   ;(info "starting clip services (edn order): " (orderby-edn system-config))
-  (info "starting clip services (start order): " (orderby-start system-config))
+  (info "starting clip services (start order): " (clip/orderby-start system-config))
   (let [running-system (clip/start system-config)
         on-stop (fn []
                   (stop-system {:system-config system-config
@@ -93,6 +77,8 @@
   (-> (io/resource services-edn)
       (read-config aero-opts))) ; opts: :profile :user :resolve
 
+(defonce args-started (atom {}))
+
 (defn start!
   "starts a clip system "
   [{:keys [services config profile run version]
@@ -100,15 +86,20 @@
          version "default"}
     :as arguments}]
   (info "start! services:" services " config:" config " profile: " profile  " version: " version  " run: " run)
+  (reset! args-started arguments)
   (let [system-config (load-config services {:config config
                                              :profile profile
                                              :version version}
                                    {:profile profile})
         {:keys [running-system]} (start-system system-config)]
+    
     (if run ;(seq arguments)
       (run-fn run arguments system-config running-system) ;; application run from the command line with arguments.
       @(promise) ;; application run from the command line, no arguments, keep running.
       )))
+
+(defn restart! []
+  (start! @args-started))
 
 ;; CLI ENTRYPOINT
 
