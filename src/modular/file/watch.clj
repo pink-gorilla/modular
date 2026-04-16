@@ -5,7 +5,6 @@
    [hawk.core :as hawk]
    [modular.ws.core :refer [send! send-all! send-response]]))
 
-
 (defn load-file! [filename]
   (let [code (slurp filename)]
     {:filename filename

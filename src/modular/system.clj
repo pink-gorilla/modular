@@ -92,7 +92,7 @@
                                              :version version}
                                    {:profile profile})
         {:keys [running-system]} (start-system system-config)]
-    
+
     (if run ;(seq arguments)
       (run-fn run arguments system-config running-system) ;; application run from the command line with arguments.
       @(promise) ;; application run from the command line, no arguments, keep running.

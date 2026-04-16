@@ -5,8 +5,7 @@
    [cprop.core :refer [load-config]]
    [cprop.source :refer [from-env from-system-props from-resource from-file]]
    [ednx.handler :refer [data-readers-a]]
-   [modular.env :refer [env]]
-   ))
+   [modular.env :refer [env]]))
 
 ;; cprop
 (defn- load-from-file [filename]

@@ -3,7 +3,6 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [clojure.java.io :as io]))
 
-
 (defn file-dir? [filename]
   (debug "checking: " filename)
   (-> (io/file filename)
