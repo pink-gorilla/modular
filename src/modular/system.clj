@@ -74,8 +74,9 @@
 (defn ^:private load-config
   [services-edn modular-opts aero-opts]
   (reset! modular-env-atom modular-opts)
-  (-> (io/resource services-edn)
-      (read-config aero-opts))) ; opts: :profile :user :resolve
+  (if-let [r (io/resource services-edn)]
+    (read-config r aero-opts)
+    (throw (ex-info (str "resource not found: " services-edn) {:resource services-edn}))))
 
 (defonce args-started (atom {}))
 

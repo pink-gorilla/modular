@@ -37,7 +37,7 @@
     (load-from-resource config)
 
     :else
-    {}))
+    (throw (ex-info (str "config not found: " config) {:config config}))))
 
 ; https://github.com/tolitius/cprop
 
