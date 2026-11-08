@@ -82,7 +82,7 @@
 
 (defn start!
   "starts a clip system "
-  [{:keys [services config profile run version]
+  [{:keys [services config profile run version repl]
     :or {profile :default
          version "default"}
     :as arguments}]
@@ -94,8 +94,12 @@
                                    {:profile profile})
         {:keys [running-system]} (start-system system-config)]
 
-    (if run ;(seq arguments)
+    (cond 
+      run ;(seq arguments)
       (run-fn run arguments system-config running-system) ;; application run from the command line with arguments.
+      repl
+      true
+      :else
       @(promise) ;; application run from the command line, no arguments, keep running.
       )))
 
