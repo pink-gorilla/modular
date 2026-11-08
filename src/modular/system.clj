@@ -94,7 +94,7 @@
                                    {:profile profile})
         {:keys [running-system]} (start-system system-config)]
 
-    (cond 
+    (cond
       run ;(seq arguments)
       (run-fn run arguments system-config running-system) ;; application run from the command line with arguments.
       repl
